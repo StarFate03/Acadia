@@ -27,10 +27,26 @@ export default function Artwork({
   hue = 210,
   seed = 'acadia',
   label,
+  alt = '',
+  src,
   showLabel = false,
   className = '',
   rounded = 'rounded-none',
 }) {
+  // When a real image is supplied, use it instead of generated art.
+  if (src) {
+    return (
+      <div className={`relative overflow-hidden ${rounded} ${className}`}>
+        <img src={src} alt={alt} className="absolute inset-0 h-full w-full object-cover" />
+        {showLabel && label && (
+          <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-3">
+            <span className="text-sm font-semibold text-white/90 drop-shadow">{label}</span>
+          </div>
+        )}
+      </div>
+    )
+  }
+
   const r = rng(hash(seed))
   const gid = `g-${hash(seed + hue).toString(36)}`
 

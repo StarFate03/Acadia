@@ -57,7 +57,7 @@ export default function Checkout() {
         </p>
 
         <div className="mx-auto mt-6 flex max-w-xs items-center gap-3 rounded-lg border border-ink-600/60 bg-ink-800 p-3 text-left">
-          <Artwork hue={game.hue} seed={game.id} className="h-16 w-12 shrink-0 rounded" />
+          <Artwork hue={game.hue} seed={game.id} src={game.cover} alt={game.title} className="h-16 w-12 shrink-0 rounded" />
           <div className="min-w-0">
             <p className="truncate font-semibold text-white">{game.title}</p>
             <p className="truncate text-xs text-slate-400">{game.publisher}</p>
@@ -200,7 +200,7 @@ export default function Checkout() {
             </h2>
 
             <div className="flex items-center gap-3">
-              <Artwork hue={game.hue} seed={game.id} className="h-20 w-16 shrink-0 rounded" />
+              <Artwork hue={game.hue} seed={game.id} src={game.cover} alt={game.title} className="h-20 w-16 shrink-0 rounded" />
               <div className="min-w-0">
                 <p className="truncate font-semibold text-white">{game.title}</p>
                 <p className="truncate text-xs text-slate-400">{game.publisher}</p>

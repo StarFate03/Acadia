@@ -34,9 +34,12 @@ export default function GameDetail() {
   const [shot, setShot] = useState(0)
 
   // Deterministic screenshot set derived from the game id.
+  // Use real screenshots when the game provides them; otherwise generate.
+  const realShots = game?.screenshots?.length ? game.screenshots : null
   const screenshots = useMemo(
-    () => (game ? Array.from({ length: 4 }, (_, i) => `${game.id}-shot-${i}`) : []),
-    [game],
+    () =>
+      realShots ?? (game ? Array.from({ length: 4 }, (_, i) => `${game.id}-shot-${i}`) : []),
+    [game, realShots],
   )
 
   if (!game) {
@@ -66,7 +69,13 @@ export default function GameDetail() {
       {/* Banner */}
       <div className="relative">
         <div className="relative h-56 w-full sm:h-72 lg:h-96">
-          <Artwork hue={game.hue} seed={`${game.id}-banner`} className="h-full w-full" />
+          <Artwork
+            hue={game.hue}
+            seed={`${game.id}-banner`}
+            src={game.cover}
+            alt={game.title}
+            className="h-full w-full"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/50 to-transparent" />
         </div>
       </div>
@@ -96,14 +105,16 @@ export default function GameDetail() {
               <Artwork
                 key={shot}
                 hue={game.hue}
-                seed={screenshots[shot]}
+                seed={realShots ? undefined : screenshots[shot]}
+                src={realShots ? screenshots[shot] : undefined}
+                alt={`${game.title} screenshot ${shot + 1}`}
                 className="aspect-video w-full animate-fade-in"
               />
             </div>
             <div className="mt-3 grid grid-cols-4 gap-3">
               {screenshots.map((s, i) => (
                 <button
-                  key={s}
+                  key={i}
                   type="button"
                   onClick={() => setShot(i)}
                   aria-label={`View screenshot ${i + 1}`}
@@ -111,7 +122,13 @@ export default function GameDetail() {
                     i === shot ? 'ring-accent-500' : 'ring-transparent hover:ring-ink-500'
                   }`}
                 >
-                  <Artwork hue={game.hue} seed={s} className="aspect-video w-full" />
+                  <Artwork
+                    hue={game.hue}
+                    seed={realShots ? undefined : s}
+                    src={realShots ? s : undefined}
+                    alt={`${game.title} thumbnail ${i + 1}`}
+                    className="aspect-video w-full"
+                  />
                 </button>
               ))}
             </div>

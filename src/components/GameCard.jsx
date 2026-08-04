@@ -17,6 +17,8 @@ export default function GameCard({ game, className = '' }) {
         <Artwork
           hue={game.hue}
           seed={game.id}
+          src={game.cover}
+          alt={game.title}
           className="h-full w-full transition-transform duration-300 ease-out group-hover:scale-105"
         />
         <div className="absolute left-2 top-2">

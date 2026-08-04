@@ -34,6 +34,8 @@ export default function HeroCarousel({ games, interval = 6000 }) {
               key={game.id}
               hue={game.hue}
               seed={game.id + '-hero'}
+              src={game.cover}
+              alt={game.title}
               className="h-full w-full animate-fade-in"
             />
             {/* Readability gradient */}

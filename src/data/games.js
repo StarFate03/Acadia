@@ -3,7 +3,17 @@
 //  Cover / screenshot art is generated locally (see components/Artwork.jsx)
 //  from each game's `hue`, so no external image assets are required.
 //  Games flagged `playable: true` are playable in-browser (see pages/Play.jsx).
+//
+//  A game may optionally supply real artwork via `cover` (used for the tile,
+//  hero and banner) and `screenshots` (the detail-page gallery). When omitted,
+//  cover/screenshot art is generated locally from the game's `hue`.
 // ─────────────────────────────────────────────────────────────
+
+import novaCover from '../assets/nova-sweeper/hero.png'
+import novaShot1 from '../assets/nova-sweeper/shot-1.png'
+import novaShot2 from '../assets/nova-sweeper/shot-2.png'
+import novaShot3 from '../assets/nova-sweeper/shot-3.png'
+import novaShot4 from '../assets/nova-sweeper/shot-4.png'
 
 export const GENRES = [
   'Action',
@@ -200,6 +210,8 @@ const originals = [
     trending: true,
     newRelease: true,
     playable: true,
+    cover: novaCover,
+    screenshots: [novaShot1, novaShot2, novaShot3, novaShot4],
     platforms: ['Browser'],
     reqs: {
       minimum: {
