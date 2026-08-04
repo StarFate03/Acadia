@@ -252,6 +252,25 @@ const originals = [
     description:
       'Ashen Sovereign is a sweeping dark-fantasy action-RPG set in a realm slowly turning to ash. Master a deliberate, weighty combat system built around stamina, parries, and devastating signature arts; roam a hand-crafted open world of ruined cathedrals and ember-lit wilds; and fell towering bosses that each demand you learn their rhythm. Forge your own path to the throne — as tyrant, savior, or something the ashes have never seen.',
   },
+  {
+    id: 'tales-of-aldermoor',
+    title: 'Tales of Aldermoor',
+    type: 'original',
+    publisher: 'Sense Interactive',
+    hue: 135,
+    genres: ['RPG', 'Adventure'],
+    tags: ['Pixel', 'Retro', 'JRPG', 'Turn-Based', 'Story Rich', 'Exploration', 'Singleplayer'],
+    price: 14.99,
+    releaseDate: '2026-06-28',
+    featured: true,
+    trending: true,
+    newRelease: true,
+    platforms: ['Windows', 'macOS'],
+    reqs: REQS.light,
+    short: 'A hand-pixeled JRPG of wandering heroes, turn-based duels, and a world worth saving.',
+    description:
+      'Tales of Aldermoor is a lovingly hand-pixeled RPG in the classic 16-bit mold. Gather a band of misfit heroes, master a tactical turn-based battle system, and journey across a vast overworld of hidden groves, storm-wracked coasts, and secret-laden dungeons. Branching sidequests, a sweeping chiptune-inspired score, and a story about ordinary people carrying an extraordinary burden.',
+  },
 ]
 
 // ── Marketplace (third-party) ────────────────────────────────
