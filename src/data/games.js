@@ -233,6 +233,25 @@ const originals = [
     description:
       'Nova Sweeper is a crisp, modern take on the timeless logic puzzle. Reveal tiles to uncover the safe path, use the numbers to deduce where the mines hide, and flag them before you misstep. Three difficulties — Beginner, Intermediate, and Expert — plus a built-in timer to chase your best clear. Free, and playable instantly in your browser.',
   },
+  {
+    id: 'ashen-sovereign',
+    title: 'Ashen Sovereign',
+    type: 'original',
+    publisher: 'Sense Interactive',
+    hue: 12,
+    genres: ['Action', 'RPG', 'Adventure'],
+    tags: ['Open World', 'Dark Fantasy', 'Souls-like', 'Story Rich', 'Boss Fights', 'Controller', 'Singleplayer'],
+    price: 10.99,
+    releaseDate: '2026-07-15',
+    featured: true,
+    trending: true,
+    newRelease: true,
+    platforms: ['Windows'],
+    reqs: REQS.heavy,
+    short: 'Claim a dying kingdom blade by blade in a punishing dark-fantasy epic.',
+    description:
+      'Ashen Sovereign is a sweeping dark-fantasy action-RPG set in a realm slowly turning to ash. Master a deliberate, weighty combat system built around stamina, parries, and devastating signature arts; roam a hand-crafted open world of ruined cathedrals and ember-lit wilds; and fell towering bosses that each demand you learn their rhythm. Forge your own path to the throne — as tyrant, savior, or something the ashes have never seen.',
+  },
 ]
 
 // ── Marketplace (third-party) ────────────────────────────────
