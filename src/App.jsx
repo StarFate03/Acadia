@@ -5,6 +5,8 @@ import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
 import Browse from './pages/Browse.jsx'
 import GameDetail from './pages/GameDetail.jsx'
+import Checkout from './pages/Checkout.jsx'
+import Play from './pages/Play.jsx'
 
 // Reset scroll position on route change.
 function ScrollToTop() {
@@ -48,6 +50,8 @@ export default function App() {
             }
           />
           <Route path="/game/:id" element={<GameDetail />} />
+          <Route path="/checkout/:id" element={<Checkout />} />
+          <Route path="/play/:id" element={<Play />} />
           <Route
             path="*"
             element={

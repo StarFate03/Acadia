@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Acadia game storefront — internal prototype (not for public release)",
+  "description": "Acadia — game storefront built with React, Vite and Tailwind CSS",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

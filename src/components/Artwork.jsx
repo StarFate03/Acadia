@@ -1,6 +1,6 @@
 // Deterministic, self-contained placeholder artwork.
 // Generates a gradient + geometric shapes from a `hue` and `seed` string,
-// so the prototype needs no external image assets or network requests.
+// so the app needs no external image assets or network requests.
 
 function hash(str) {
   let h = 2166136261

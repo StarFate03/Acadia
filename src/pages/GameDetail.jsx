@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import Artwork from '../components/Artwork.jsx'
 import Badge from '../components/Badge.jsx'
-import BuyModal from '../components/BuyModal.jsx'
 import { getGameById, formatPrice } from '../data/games.js'
 
 function ReqColumn({ title, reqs }) {
@@ -30,8 +29,8 @@ function ReqColumn({ title, reqs }) {
 
 export default function GameDetail() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const game = getGameById(id)
-  const [modalOpen, setModalOpen] = useState(false)
   const [shot, setShot] = useState(0)
 
   // Deterministic screenshot set derived from the game id.
@@ -55,6 +54,12 @@ export default function GameDetail() {
   }
 
   const isFree = game.price === 0
+  const playable = Boolean(game.playable)
+
+  const handlePrimary = () => {
+    if (playable) navigate(`/play/${game.id}`)
+    else navigate(`/checkout/${game.id}`)
+  }
 
   return (
     <div className="pb-10">
@@ -188,20 +193,20 @@ export default function GameDetail() {
 
               <button
                 type="button"
-                onClick={() => setModalOpen(true)}
+                onClick={handlePrimary}
                 className="btn-accent w-full py-3 text-base"
               >
-                {isFree ? 'Get Now' : 'Buy Now'}
+                {playable ? '▶ Play Now' : isFree ? 'Get Now' : 'Buy Now'}
               </button>
-              <p className="text-center text-xs text-slate-500">
-                Prototype preview — purchasing is not yet available.
-              </p>
+              {playable && (
+                <p className="text-center text-xs text-slate-500">
+                  Plays right here in your browser — free, no download.
+                </p>
+              )}
             </div>
           </aside>
         </div>
       </div>
-
-      <BuyModal open={modalOpen} onClose={() => setModalOpen(false)} game={game} />
     </div>
   )
 }

@@ -1,13 +1,9 @@
-# Acadia — Storefront Prototype
+# Acadia — Game Storefront
 
-An internal, non-public prototype of a game storefront/platform for **Acadia**,
-in the spirit of Steam / Epic / Xbox. Built with **React + Vite + Tailwind CSS**
-and driven entirely by **mock data** — there is no backend, database, accounts,
-or payment processing.
-
-> **Internal Prototype — Not for Public Release.**
-> All game titles, publishers, and descriptions are fictional. Cover/screenshot
-> art is generated locally, so the app needs no external image assets.
+A game storefront/platform for **Acadia**, in the spirit of Steam / Epic / Xbox.
+Built with **React + Vite + Tailwind CSS**. The catalog is currently served from
+local mock data, and the store includes a working checkout flow and a free
+in-browser game.
 
 ## Getting started
 
@@ -31,34 +27,43 @@ npm run preview   # preview the production build
 | ---------------- | ------------ | ----------------------------------------------------------- |
 | `/`              | Home         | Rotating featured hero, Originals, Marketplace, New, Trending |
 | `/browse`        | Store        | Full grid, filter by type/genre/price/tags, sortable         |
-| `/originals`     | Store        | Browse pre-filtered to Acadia Originals                     |
+| `/originals`     | Store        | Browse pre-filtered to Acadia Originals                      |
 | `/marketplace`   | Store        | Browse pre-filtered to third-party Marketplace titles        |
-| `/game/:id`      | Game detail  | Banner, screenshot gallery, requirements, "Buy Now" modal    |
+| `/game/:id`      | Game detail  | Banner, screenshot gallery, requirements, Buy / Play button  |
+| `/checkout/:id`  | Checkout     | Order summary + payment form (payment is simulated)          |
+| `/play/:id`      | Play         | In-browser games (e.g. Nova Sweeper, a Minesweeper)          |
 
 - **Originals vs Marketplace** are distinguished everywhere by a colored `Badge`
   (blue = Acadia Original, green = Marketplace).
-- **Buy Now** opens a "Prototype Preview — Purchasing Not Yet Available" modal.
-  No payment flow exists.
+- Paid titles route to **Checkout**; the free playable title (**Nova Sweeper** by
+  Sense Interactive) routes straight to **Play**.
+
+## Payments
+
+The checkout page is a front-end demo: there is no backend or payment processor
+wired up, so **no real payment is taken and no card is charged**. The form exists
+to demonstrate the purchase flow. Wiring up a real processor (e.g. Stripe) would
+be the next step if this goes to production.
 
 ## Project structure
 
 ```
 src/
-  data/games.js        Mock catalog + selectors (single source of truth)
+  data/games.js        Catalog + selectors (single source of truth)
   components/           Header, Footer, HeroCarousel, GameRow, GameCard,
-                        Badge, Artwork (local placeholder art), FilterBar, BuyModal
-  pages/                Home, Browse, GameDetail
+                        Badge, Artwork (local placeholder art), FilterBar, Minesweeper
+  pages/                Home, Browse, GameDetail, Checkout, Play
   App.jsx               Routes + layout
 ```
 
 ## Branding / theming
 
 - Accent color is defined **once** in `tailwind.config.js` under `theme.extend.colors.accent`.
-  It's currently electric blue; change that scale to rebrand (e.g. to amber) —
-  nothing else hard-codes the accent.
+  It's currently electric blue; change that scale to rebrand — nothing else hard-codes the accent.
 - Dark theme surfaces live under `colors.ink` in the same file.
 
-## Not in scope yet
+## Deployment
 
-Real checkout/payments, user accounts/login, marketplace licensing integration,
-and an About/team page are intentionally left out until real requirements exist.
+Hosted on Vercel, auto-deploying on push to `main`. `vercel.json` adds an SPA
+fallback so client-side routes work on direct load. The `dist/` output is a
+static build.

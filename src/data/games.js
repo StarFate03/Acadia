@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────
-//  MOCK DATA — Acadia storefront prototype
-//  All titles, publishers, and descriptions are entirely fictional.
+//  Game catalog — Acadia storefront
 //  Cover / screenshot art is generated locally (see components/Artwork.jsx)
 //  from each game's `hue`, so no external image assets are required.
+//  Games flagged `playable: true` are playable in-browser (see pages/Play.jsx).
 // ─────────────────────────────────────────────────────────────
 
 export const GENRES = [
@@ -185,6 +185,41 @@ const originals = [
     short: 'A blossoming swordplay roguelike where every death rewrites the garden.',
     description:
       'Petal & Blade is a hand-animated action roguelike set in an ever-shifting garden-labyrinth. Chain katana strikes into blooming combos, collect seeds that mutate each run, and learn a boss’s tells over a hundred beautiful failures.',
+  },
+  {
+    id: 'nova-sweeper',
+    title: 'Nova Sweeper',
+    type: 'original',
+    publisher: 'Sense Interactive',
+    hue: 145,
+    genres: ['Puzzle'],
+    tags: ['Minesweeper', 'Casual', 'Logic', 'Singleplayer', 'Free'],
+    price: 0,
+    releaseDate: '2026-08-01',
+    featured: true,
+    trending: true,
+    newRelease: true,
+    playable: true,
+    platforms: ['Browser'],
+    reqs: {
+      minimum: {
+        os: 'Any modern browser',
+        cpu: 'Any',
+        ram: '2 GB',
+        gpu: 'Any',
+        storage: 'None — plays in your browser',
+      },
+      recommended: {
+        os: 'Latest Chrome / Edge / Firefox / Safari',
+        cpu: 'Any',
+        ram: '4 GB',
+        gpu: 'Any',
+        storage: 'None — plays in your browser',
+      },
+    },
+    short: 'The classic mine-hunt, reimagined. Clear the field, flag the mines, beat the clock.',
+    description:
+      'Nova Sweeper is a crisp, modern take on the timeless logic puzzle. Reveal tiles to uncover the safe path, use the numbers to deduce where the mines hide, and flag them before you misstep. Three difficulties — Beginner, Intermediate, and Expert — plus a built-in timer to chase your best clear. Free, and playable instantly in your browser.',
   },
 ]
 
