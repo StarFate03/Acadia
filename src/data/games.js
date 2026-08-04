@@ -15,6 +15,18 @@ import novaShot2 from '../assets/nova-sweeper/shot-2.png'
 import novaShot3 from '../assets/nova-sweeper/shot-3.png'
 import novaShot4 from '../assets/nova-sweeper/shot-4.png'
 
+import ashenCover from '../assets/ashen-sovereign/hero.png'
+import ashenShot1 from '../assets/ashen-sovereign/shot-1.png'
+import ashenShot2 from '../assets/ashen-sovereign/shot-2.png'
+import ashenShot3 from '../assets/ashen-sovereign/shot-3.png'
+import ashenShot4 from '../assets/ashen-sovereign/shot-4.png'
+
+import alderCover from '../assets/tales-of-aldermoor/hero.png'
+import alderShot1 from '../assets/tales-of-aldermoor/shot-1.png'
+import alderShot2 from '../assets/tales-of-aldermoor/shot-2.png'
+import alderShot3 from '../assets/tales-of-aldermoor/shot-3.png'
+import alderShot4 from '../assets/tales-of-aldermoor/shot-4.png'
+
 export const GENRES = [
   'Action',
   'Adventure',
@@ -248,6 +260,8 @@ const originals = [
     newRelease: true,
     platforms: ['Windows'],
     reqs: REQS.heavy,
+    cover: ashenCover,
+    screenshots: [ashenShot1, ashenShot2, ashenShot3, ashenShot4],
     short: 'Claim a dying kingdom blade by blade in a punishing dark-fantasy epic.',
     description:
       'Ashen Sovereign is a sweeping dark-fantasy action-RPG set in a realm slowly turning to ash. Master a deliberate, weighty combat system built around stamina, parries, and devastating signature arts; roam a hand-crafted open world of ruined cathedrals and ember-lit wilds; and fell towering bosses that each demand you learn their rhythm. Forge your own path to the throne — as tyrant, savior, or something the ashes have never seen.',
@@ -267,6 +281,8 @@ const originals = [
     newRelease: true,
     platforms: ['Windows', 'macOS'],
     reqs: REQS.light,
+    cover: alderCover,
+    screenshots: [alderShot1, alderShot2, alderShot3, alderShot4],
     short: 'A hand-pixeled JRPG of wandering heroes, turn-based duels, and a world worth saving.',
     description:
       'Tales of Aldermoor is a lovingly hand-pixeled RPG in the classic 16-bit mold. Gather a band of misfit heroes, master a tactical turn-based battle system, and journey across a vast overworld of hidden groves, storm-wracked coasts, and secret-laden dungeons. Branching sidequests, a sweeping chiptune-inspired score, and a story about ordinary people carrying an extraordinary burden.',
