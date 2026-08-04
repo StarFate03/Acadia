@@ -27,10 +27,10 @@ export default function Home() {
         <HeroCarousel games={featured} />
       </div>
 
-      {/* Astrion Originals */}
+      {/* Acadia Originals */}
       <GameRow
-        title="Astrion Originals"
-        subtitle="Games made in-house by Astrion’s own studios."
+        title="Acadia Originals"
+        subtitle="Games made in-house by Acadia’s own studios."
         games={originals}
         moreTo="/originals"
       />
@@ -45,7 +45,7 @@ export default function Home() {
         </div>
         <GameRow
           title="Marketplace"
-          subtitle="Games from independent publishers, sold through Astrion."
+          subtitle="Games from independent publishers, sold through Acadia."
           games={marketplace}
           moreTo="/marketplace"
         />

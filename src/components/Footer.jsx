@@ -10,10 +10,10 @@ export default function Footer() {
               <span className="grid h-6 w-6 place-items-center rounded bg-accent-500 text-xs font-black text-white">
                 A
               </span>
-              <span className="font-extrabold tracking-tight text-white">ASTRION</span>
+              <span className="font-extrabold tracking-tight text-white">ACADIA</span>
             </div>
             <p className="mt-3 text-sm text-slate-400">
-              A storefront prototype for Astrion Originals and Marketplace titles.
+              A storefront prototype for Acadia Originals and Marketplace titles.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col items-start justify-between gap-2 border-t border-ink-700/70 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} Astrion. All titles and publishers are fictional.</span>
+          <span>© {new Date().getFullYear()} Acadia. All titles and publishers are fictional.</span>
           <span className="rounded bg-ink-800 px-2 py-1 font-medium text-slate-400 ring-1 ring-inset ring-ink-600">
             Internal Prototype — Not for Public Release
           </span>

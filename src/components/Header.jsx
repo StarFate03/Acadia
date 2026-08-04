@@ -32,7 +32,7 @@ export default function Header() {
             A
           </span>
           <span className="text-lg font-extrabold tracking-tight text-white">
-            ASTRION
+            ACADIA
           </span>
         </Link>
 

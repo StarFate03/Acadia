@@ -1,6 +1,6 @@
-# Astrion — Storefront Prototype
+# Acadia — Storefront Prototype
 
-An internal, non-public prototype of a game storefront/platform for **Astrion**,
+An internal, non-public prototype of a game storefront/platform for **Acadia**,
 in the spirit of Steam / Epic / Xbox. Built with **React + Vite + Tailwind CSS**
 and driven entirely by **mock data** — there is no backend, database, accounts,
 or payment processing.
@@ -31,12 +31,12 @@ npm run preview   # preview the production build
 | ---------------- | ------------ | ----------------------------------------------------------- |
 | `/`              | Home         | Rotating featured hero, Originals, Marketplace, New, Trending |
 | `/browse`        | Store        | Full grid, filter by type/genre/price/tags, sortable         |
-| `/originals`     | Store        | Browse pre-filtered to Astrion Originals                     |
+| `/originals`     | Store        | Browse pre-filtered to Acadia Originals                     |
 | `/marketplace`   | Store        | Browse pre-filtered to third-party Marketplace titles        |
 | `/game/:id`      | Game detail  | Banner, screenshot gallery, requirements, "Buy Now" modal    |
 
 - **Originals vs Marketplace** are distinguished everywhere by a colored `Badge`
-  (blue = Astrion Original, green = Marketplace).
+  (blue = Acadia Original, green = Marketplace).
 - **Buy Now** opens a "Prototype Preview — Purchasing Not Yet Available" modal.
   No payment flow exists.
 

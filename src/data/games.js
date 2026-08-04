@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-//  MOCK DATA — Astrion storefront prototype
+//  MOCK DATA — Acadia storefront prototype
 //  All titles, publishers, and descriptions are entirely fictional.
 //  Cover / screenshot art is generated locally (see components/Artwork.jsx)
 //  from each game's `hue`, so no external image assets are required.
@@ -70,13 +70,13 @@ const REQS = {
   },
 }
 
-// ── Astrion Originals ────────────────────────────────────────
+// ── Acadia Originals ────────────────────────────────────────
 const originals = [
   {
     id: 'stellar-drift',
     title: 'Stellar Drift',
     type: 'original',
-    publisher: 'Astrion Studios',
+    publisher: 'Acadia Studios',
     hue: 212,
     genres: ['Adventure', 'Simulation'],
     tags: ['Space', 'Exploration', 'Open World', 'Relaxing', 'Singleplayer'],
@@ -95,7 +95,7 @@ const originals = [
     id: 'ember-vanguard',
     title: 'Ember Vanguard',
     type: 'original',
-    publisher: 'Astrion Studios',
+    publisher: 'Acadia Studios',
     hue: 18,
     genres: ['Action', 'RPG'],
     tags: ['Fantasy', 'Co-op', 'Combat', 'Story Rich', 'Controller'],
@@ -114,7 +114,7 @@ const originals = [
     id: 'neon-circuit',
     title: 'Neon Circuit',
     type: 'original',
-    publisher: 'Astrion Arcade',
+    publisher: 'Acadia Arcade',
     hue: 285,
     genres: ['Racing', 'Action'],
     tags: ['Arcade', 'Fast-Paced', 'Multiplayer', 'Neon', 'Competitive'],
@@ -133,7 +133,7 @@ const originals = [
     id: 'hollow-signal',
     title: 'Hollow Signal',
     type: 'original',
-    publisher: 'Astrion Studios',
+    publisher: 'Acadia Studios',
     hue: 160,
     genres: ['Adventure', 'Puzzle'],
     tags: ['Atmospheric', 'Mystery', 'Sci-Fi', 'Singleplayer', 'Story Rich'],
@@ -152,7 +152,7 @@ const originals = [
     id: 'terra-forge',
     title: 'Terra Forge',
     type: 'original',
-    publisher: 'Astrion Studios',
+    publisher: 'Acadia Studios',
     hue: 38,
     genres: ['Strategy', 'Simulation', 'Survival'],
     tags: ['Base Building', 'City Builder', 'Resource Management', 'Sandbox'],
@@ -171,7 +171,7 @@ const originals = [
     id: 'petal-and-blade',
     title: 'Petal & Blade',
     type: 'original',
-    publisher: 'Astrion Arcade',
+    publisher: 'Acadia Arcade',
     hue: 330,
     genres: ['Roguelike', 'Action'],
     tags: ['Roguelike', 'Fast-Paced', 'Pixel', 'Difficult', 'Replayable'],

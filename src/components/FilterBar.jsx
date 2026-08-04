@@ -3,7 +3,7 @@
 
 const TYPE_OPTIONS = [
   { value: 'all', label: 'All titles' },
-  { value: 'original', label: 'Astrion Originals' },
+  { value: 'original', label: 'Acadia Originals' },
   { value: 'marketplace', label: 'Marketplace' },
 ]
 

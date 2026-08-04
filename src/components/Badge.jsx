@@ -1,4 +1,4 @@
-// Visual badge distinguishing Astrion Originals from Marketplace titles.
+// Visual badge distinguishing Acadia Originals from Marketplace titles.
 // Two clearly different colors so the source of a game is obvious at a glance.
 
 export default function Badge({ type, className = '' }) {
@@ -16,7 +16,7 @@ export default function Badge({ type, className = '' }) {
           isOriginal ? 'bg-accent-400' : 'bg-emerald-400'
         }`}
       />
-      {isOriginal ? 'Astrion Original' : 'Marketplace'}
+      {isOriginal ? 'Acadia Original' : 'Marketplace'}
     </span>
   )
 }

@@ -25,7 +25,7 @@ function rng(seedInt) {
 
 export default function Artwork({
   hue = 210,
-  seed = 'astrion',
+  seed = 'acadia',
   label,
   showLabel = false,
   className = '',

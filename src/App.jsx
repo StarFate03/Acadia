@@ -25,15 +25,15 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route
             path="/browse"
-            element={<Browse initialType="all" heading="Store" blurb="Browse every Astrion Original and Marketplace title." />}
+            element={<Browse initialType="all" heading="Store" blurb="Browse every Acadia Original and Marketplace title." />}
           />
           <Route
             path="/originals"
             element={
               <Browse
                 initialType="original"
-                heading="Astrion Originals"
-                blurb="Games developed in-house by Astrion’s own studios."
+                heading="Acadia Originals"
+                blurb="Games developed in-house by Acadia’s own studios."
               />
             }
           />
@@ -43,7 +43,7 @@ export default function App() {
               <Browse
                 initialType="marketplace"
                 heading="Marketplace"
-                blurb="Third-party titles from independent publishers, sold through Astrion."
+                blurb="Third-party titles from independent publishers, sold through Acadia."
               />
             }
           />
