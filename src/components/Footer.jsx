@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 export default function Footer() {
+  const { t } = useLang()
   return (
     <footer className="mt-16 border-t border-ink-600/70 bg-ink-950">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -12,33 +14,31 @@ export default function Footer() {
               </span>
               <span className="font-extrabold tracking-tight text-white">ACADIA</span>
             </div>
-            <p className="mt-3 text-sm text-slate-400">
-              Your store for Acadia Originals and games from independent publishers.
-            </p>
+            <p className="mt-3 text-sm text-slate-400">{t('footer.tagline')}</p>
           </div>
 
           <nav className="grid grid-cols-2 gap-x-12 gap-y-2 text-sm sm:grid-cols-3">
             <Link to="/browse" className="text-slate-400 hover:text-white">
-              Store
+              {t('nav.store')}
             </Link>
             <Link to="/originals" className="text-slate-400 hover:text-white">
-              Originals
+              {t('nav.originals')}
             </Link>
             <Link to="/marketplace" className="text-slate-400 hover:text-white">
-              Marketplace
+              {t('nav.marketplace')}
             </Link>
-            <span className="cursor-default text-slate-600">Support</span>
-            <span className="cursor-default text-slate-600">About</span>
-            <span className="cursor-default text-slate-600">Careers</span>
+            <span className="cursor-default text-slate-600">{t('footer.support')}</span>
+            <span className="cursor-default text-slate-600">{t('footer.about')}</span>
+            <span className="cursor-default text-slate-600">{t('footer.careers')}</span>
           </nav>
         </div>
 
         <div className="mt-8 flex flex-col items-start justify-between gap-2 border-t border-ink-700/70 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} Acadia. All rights reserved.</span>
+          <span>{t('footer.rights', { year: new Date().getFullYear() })}</span>
           <div className="flex gap-4">
-            <span className="cursor-default hover:text-slate-300">Privacy</span>
-            <span className="cursor-default hover:text-slate-300">Terms</span>
-            <span className="cursor-default hover:text-slate-300">Refunds</span>
+            <span className="cursor-default hover:text-slate-300">{t('footer.privacy')}</span>
+            <span className="cursor-default hover:text-slate-300">{t('footer.terms')}</span>
+            <span className="cursor-default hover:text-slate-300">{t('footer.refunds')}</span>
           </div>
         </div>
       </div>

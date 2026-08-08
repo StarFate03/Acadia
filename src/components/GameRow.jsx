@@ -1,9 +1,11 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import GameCard from './GameCard.jsx'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 // A titled, horizontally-scrolling row of game cards with arrow controls.
 export default function GameRow({ title, subtitle, games, moreTo }) {
+  const { t } = useLang()
   const scroller = useRef(null)
 
   const scrollBy = (dir) => {
@@ -27,7 +29,7 @@ export default function GameRow({ title, subtitle, games, moreTo }) {
               to={moreTo}
               className="text-sm font-medium text-accent-300 hover:text-accent-200"
             >
-              View all
+              {t('common.viewAll')}
             </Link>
           )}
           <div className="hidden gap-1 sm:flex">

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 // A self-contained, fully playable Minesweeper.
 // Left-click (or tap) reveals; right-click (or Flag mode + tap) flags.
@@ -179,6 +180,7 @@ function reducer(state, action) {
 }
 
 export default function Minesweeper() {
+  const { t } = useLang()
   const [flagMode, setFlagMode] = useReducer((m) => !m, false)
   const [state, dispatch] = useReducer(reducer, 'beginner', initialState)
   const { board, status, diffKey } = state
@@ -229,7 +231,7 @@ export default function Minesweeper() {
     <div className="mx-auto w-full max-w-fit">
       {/* Difficulty selector */}
       <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
-        {Object.entries(DIFFICULTIES).map(([key, d]) => (
+        {Object.keys(DIFFICULTIES).map((key) => (
           <button
             key={key}
             type="button"
@@ -240,7 +242,7 @@ export default function Minesweeper() {
                 : 'bg-ink-700 text-slate-300 hover:bg-ink-600'
             }`}
           >
-            {d.label}
+            {t(`mine.${key}`)}
           </button>
         ))}
       </div>
@@ -253,7 +255,7 @@ export default function Minesweeper() {
         <button
           type="button"
           onClick={() => reset(diffKey)}
-          aria-label="New game"
+          aria-label={t('mine.newGame')}
           className="grid h-9 w-9 place-items-center rounded-md bg-ink-700 text-xl hover:bg-ink-600"
         >
           {face}
@@ -275,10 +277,8 @@ export default function Minesweeper() {
           }`}
           aria-pressed={flagMode}
         >
-          🚩 Flag mode {flagMode ? 'ON' : 'OFF'}
-          <span className="hidden text-slate-400 sm:inline">
-            (or right-click to flag)
-          </span>
+          🚩 {t('mine.flagMode')} {flagMode ? t('mine.on') : t('mine.off')}
+          <span className="hidden text-slate-400 sm:inline">{t('mine.rightClick')}</span>
         </button>
       </div>
 
@@ -338,15 +338,13 @@ export default function Minesweeper() {
               : 'border-red-500/40 bg-red-500/10 text-red-300'
           }`}
         >
-          {status === 'won'
-            ? `Cleared in ${seconds}s! Nicely done.`
-            : 'Boom — you hit a mine.'}{' '}
+          {status === 'won' ? t('mine.won', { s: seconds }) : t('mine.lost')}{' '}
           <button
             type="button"
             onClick={() => reset(diffKey)}
             className="underline underline-offset-2 hover:no-underline"
           >
-            Play again
+            {t('mine.playAgain')}
           </button>
         </div>
       )}

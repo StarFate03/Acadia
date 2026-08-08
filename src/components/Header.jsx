@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import LanguageSelector from './LanguageSelector.jsx'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 const navLinks = [
-  { to: '/browse', label: 'Store' },
-  { to: '/originals', label: 'Originals' },
-  { to: '/marketplace', label: 'Marketplace' },
+  { to: '/browse', key: 'nav.store' },
+  { to: '/originals', key: 'nav.originals' },
+  { to: '/marketplace', key: 'nav.marketplace' },
 ]
 
 export default function Header() {
+  const { t } = useLang()
   const [query, setQuery] = useState('')
   const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
@@ -41,7 +43,7 @@ export default function Header() {
         <nav className="ml-4 hidden items-center gap-5 md:flex">
           {navLinks.map((l) => (
             <NavLink key={l.to} to={l.to} className={linkClass}>
-              {l.label}
+              {t(l.key)}
             </NavLink>
           ))}
         </nav>
@@ -54,8 +56,8 @@ export default function Header() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search games…"
-                aria-label="Search games"
+                placeholder={t('search.placeholder')}
+                aria-label={t('search.placeholder')}
                 className="w-40 rounded-md border border-ink-600 bg-ink-800 py-1.5 pl-8 pr-3 text-sm text-slate-200 placeholder:text-slate-500 focus:border-accent-500 focus:outline-none lg:w-56"
               />
               <svg
@@ -101,8 +103,8 @@ export default function Header() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search games…"
-              aria-label="Search games"
+              placeholder={t('search.placeholder')}
+              aria-label={t('search.placeholder')}
               className="w-full rounded-md border border-ink-600 bg-ink-800 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:border-accent-500 focus:outline-none"
             />
           </form>
@@ -118,12 +120,12 @@ export default function Header() {
                   }`
                 }
               >
-                {l.label}
+                {t(l.key)}
               </NavLink>
             ))}
           </nav>
           <div className="mt-3 border-t border-ink-600/70 pt-3">
-            <span className="mb-1.5 block text-xs font-medium text-slate-500">Language</span>
+            <span className="mb-1.5 block text-xs font-medium text-slate-500">{t('lang.label')}</span>
             <LanguageSelector />
           </div>
         </div>

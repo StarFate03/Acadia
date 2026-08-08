@@ -2,7 +2,15 @@ import { useMemo, useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import GameCard from '../components/GameCard.jsx'
 import FilterBar, { SORT_OPTIONS } from '../components/FilterBar.jsx'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 import { GAMES, GENRES } from '../data/games.js'
+
+// Heading + blurb translation keys for each browse variant.
+const HEADINGS = {
+  all: ['browse.store', 'browse.storeBlurb'],
+  original: ['browse.originals', 'browse.originalsBlurb'],
+  marketplace: ['browse.marketplace', 'browse.marketplaceBlurb'],
+}
 
 // Unique tag list across the catalog, sorted alphabetically.
 const ALL_TAGS = [...new Set(GAMES.flatMap((g) => g.tags))].sort()
@@ -39,9 +47,11 @@ function sortGames(list, sort) {
   }
 }
 
-export default function Browse({ initialType = 'all', heading = 'Store', blurb }) {
+export default function Browse({ initialType = 'all' }) {
+  const { t } = useLang()
   const [searchParams] = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
+  const [headingKey, blurbKey] = HEADINGS[initialType] || HEADINGS.all
 
   const [filters, setFilters] = useState({
     type: initialType,
@@ -87,11 +97,11 @@ export default function Browse({ initialType = 'all', heading = 'Store', blurb }
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-extrabold text-white sm:text-3xl">{heading}</h1>
-        {blurb && <p className="mt-1 text-slate-400">{blurb}</p>}
+        <h1 className="text-2xl font-extrabold text-white sm:text-3xl">{t(headingKey)}</h1>
+        <p className="mt-1 text-slate-400">{t(blurbKey)}</p>
         {filters.q && (
           <p className="mt-2 text-sm text-slate-400">
-            Showing results for{' '}
+            {t('browse.showingFor')}{' '}
             <span className="font-medium text-slate-200">“{filters.q}”</span>
           </p>
         )}
@@ -107,11 +117,11 @@ export default function Browse({ initialType = 'all', heading = 'Store', blurb }
           <svg viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor" aria-hidden="true">
             <path d="M3 5a1 1 0 011-1h12a1 1 0 010 2H4a1 1 0 01-1-1zm2 5a1 1 0 011-1h8a1 1 0 010 2H6a1 1 0 01-1-1zm3 5a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1z" />
           </svg>
-          Filters
+          {t('browse.filters')}
         </button>
 
         <label className="ml-auto flex items-center gap-2 text-sm text-slate-400">
-          Sort by
+          {t('browse.sortBy')}
           <select
             value={filters.sort}
             onChange={(e) => setFilters((f) => ({ ...f, sort: e.target.value }))}
@@ -119,7 +129,7 @@ export default function Browse({ initialType = 'all', heading = 'Store', blurb }
           >
             {SORT_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
-                {o.label}
+                {t(o.key)}
               </option>
             ))}
           </select>
@@ -144,10 +154,8 @@ export default function Browse({ initialType = 'all', heading = 'Store', blurb }
         <div>
           {results.length === 0 ? (
             <div className="rounded-xl border border-dashed border-ink-600 bg-ink-800/40 py-24 text-center">
-              <p className="text-lg font-semibold text-white">No games match your filters</p>
-              <p className="mt-1 text-sm text-slate-400">
-                Try clearing a filter or broadening your search.
-              </p>
+              <p className="text-lg font-semibold text-white">{t('browse.noResults.title')}</p>
+              <p className="mt-1 text-sm text-slate-400">{t('browse.noResults.body')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">

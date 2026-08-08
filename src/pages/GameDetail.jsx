@@ -2,15 +2,17 @@ import { useMemo, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import Artwork from '../components/Artwork.jsx'
 import Badge from '../components/Badge.jsx'
-import { getGameById, formatPrice } from '../data/games.js'
+import { useLang } from '../i18n/LanguageProvider.jsx'
+import { getGameById } from '../data/games.js'
 
 function ReqColumn({ title, reqs }) {
+  const { t } = useLang()
   const rows = [
-    ['OS', reqs.os],
-    ['Processor', reqs.cpu],
-    ['Memory', reqs.ram],
-    ['Graphics', reqs.gpu],
-    ['Storage', reqs.storage],
+    [t('req.os'), reqs.os],
+    [t('req.cpu'), reqs.cpu],
+    [t('req.ram'), reqs.ram],
+    [t('req.gpu'), reqs.gpu],
+    [t('req.storage'), reqs.storage],
   ]
   return (
     <div className="rounded-lg border border-ink-600/60 bg-ink-800/50 p-4">
@@ -28,6 +30,7 @@ function ReqColumn({ title, reqs }) {
 }
 
 export default function GameDetail() {
+  const { t, term, price, gameText, lang } = useLang()
   const { id } = useParams()
   const navigate = useNavigate()
   const game = getGameById(id)
@@ -45,12 +48,10 @@ export default function GameDetail() {
   if (!game) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6">
-        <h1 className="text-2xl font-bold text-white">Game not found</h1>
-        <p className="mt-2 text-slate-400">
-          We couldn’t find that title in the catalog.
-        </p>
+        <h1 className="text-2xl font-bold text-white">{t('detail.notFound')}</h1>
+        <p className="mt-2 text-slate-400">{t('detail.notFoundBody')}</p>
         <Link to="/browse" className="btn-accent mt-6">
-          Back to Store
+          {t('detail.backToStore')}
         </Link>
       </div>
     )
@@ -84,14 +85,14 @@ export default function GameDetail() {
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm text-slate-400">
           <Link to="/" className="hover:text-white">
-            Home
+            {t('breadcrumb.home')}
           </Link>
           <span className="mx-1.5 text-slate-600">/</span>
           <Link
             to={game.type === 'original' ? '/originals' : '/marketplace'}
             className="hover:text-white"
           >
-            {game.type === 'original' ? 'Originals' : 'Marketplace'}
+            {game.type === 'original' ? t('nav.originals') : t('nav.marketplace')}
           </Link>
           <span className="mx-1.5 text-slate-600">/</span>
           <span className="text-slate-300">{game.title}</span>
@@ -135,23 +136,23 @@ export default function GameDetail() {
 
             {/* About */}
             <div className="mt-8">
-              <h2 className="text-lg font-bold text-white">About this game</h2>
-              <p className="mt-3 leading-relaxed text-slate-300">{game.description}</p>
+              <h2 className="text-lg font-bold text-white">{t('detail.about')}</h2>
+              <p className="mt-3 leading-relaxed text-slate-300">{gameText(game, 'description')}</p>
             </div>
 
             {/* Tags */}
             <div className="mt-6">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
-                Tags
+                {t('detail.tags')}
               </h3>
               <div className="mt-2 flex flex-wrap gap-2">
-                {game.tags.map((t) => (
+                {game.tags.map((tag) => (
                   <Link
-                    key={t}
-                    to={`/browse?tag=${encodeURIComponent(t)}`}
+                    key={tag}
+                    to={`/browse?tag=${encodeURIComponent(tag)}`}
                     className="rounded-full bg-ink-700 px-3 py-1 text-xs text-slate-300 hover:bg-ink-600 hover:text-white"
                   >
-                    {t}
+                    {term(tag)}
                   </Link>
                 ))}
               </div>
@@ -159,10 +160,10 @@ export default function GameDetail() {
 
             {/* System requirements */}
             <div className="mt-8">
-              <h2 className="mb-3 text-lg font-bold text-white">System Requirements</h2>
+              <h2 className="mb-3 text-lg font-bold text-white">{t('detail.sysreq')}</h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                <ReqColumn title="Minimum" reqs={game.reqs.minimum} />
-                <ReqColumn title="Recommended" reqs={game.reqs.recommended} />
+                <ReqColumn title={t('detail.min')} reqs={game.reqs.minimum} />
+                <ReqColumn title={t('detail.recommended')} reqs={game.reqs.recommended} />
               </div>
             </div>
           </div>
@@ -174,17 +175,17 @@ export default function GameDetail() {
                 <Badge type={game.type} />
               </div>
               <h1 className="text-2xl font-extrabold text-white">{game.title}</h1>
-              <p className="text-sm text-slate-400">{game.short}</p>
+              <p className="text-sm text-slate-400">{gameText(game, 'short')}</p>
 
               <dl className="space-y-1.5 border-y border-ink-600/60 py-4 text-sm">
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Publisher</dt>
+                  <dt className="text-slate-500">{t('detail.publisher')}</dt>
                   <dd className="text-slate-300">{game.publisher}</dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Release date</dt>
+                  <dt className="text-slate-500">{t('detail.releaseDate')}</dt>
                   <dd className="text-slate-300">
-                    {new Date(game.releaseDate).toLocaleDateString(undefined, {
+                    {new Date(game.releaseDate).toLocaleDateString(lang, {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',
@@ -192,20 +193,18 @@ export default function GameDetail() {
                   </dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Genres</dt>
-                  <dd className="text-right text-slate-300">{game.genres.join(', ')}</dd>
+                  <dt className="text-slate-500">{t('detail.genres')}</dt>
+                  <dd className="text-right text-slate-300">{game.genres.map(term).join(', ')}</dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Platforms</dt>
-                  <dd className="text-right text-slate-300">{game.platforms.join(', ')}</dd>
+                  <dt className="text-slate-500">{t('detail.platforms')}</dt>
+                  <dd className="text-right text-slate-300">{game.platforms.map(term).join(', ')}</dd>
                 </div>
               </dl>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-400">Price</span>
-                <span className="text-2xl font-bold text-white">
-                  {formatPrice(game.price)}
-                </span>
+                <span className="text-sm text-slate-400">{t('detail.price')}</span>
+                <span className="text-2xl font-bold text-white">{price(game.price)}</span>
               </div>
 
               <button
@@ -213,12 +212,10 @@ export default function GameDetail() {
                 onClick={handlePrimary}
                 className="btn-accent w-full py-3 text-base"
               >
-                {playable ? '▶ Play Now' : isFree ? 'Get Now' : 'Buy Now'}
+                {playable ? t('detail.playNow') : isFree ? t('detail.getNow') : t('detail.buyNow')}
               </button>
               {playable && (
-                <p className="text-center text-xs text-slate-500">
-                  Plays right here in your browser — free, no download.
-                </p>
+                <p className="text-center text-xs text-slate-500">{t('detail.playsHere')}</p>
               )}
             </div>
           </aside>

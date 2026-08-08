@@ -1,7 +1,10 @@
+import { useLang } from '../i18n/LanguageProvider.jsx'
+
 // Visual badge distinguishing Acadia Originals from Marketplace titles.
 // Two clearly different colors so the source of a game is obvious at a glance.
 
 export default function Badge({ type, className = '' }) {
+  const { t } = useLang()
   const isOriginal = type === 'original'
   const styles = isOriginal
     ? 'bg-accent-500/15 text-accent-300 ring-1 ring-inset ring-accent-500/40'
@@ -16,7 +19,7 @@ export default function Badge({ type, className = '' }) {
           isOriginal ? 'bg-accent-400' : 'bg-emerald-400'
         }`}
       />
-      {isOriginal ? 'Acadia Original' : 'Marketplace'}
+      {isOriginal ? t('badge.original') : t('badge.marketplace')}
     </span>
   )
 }

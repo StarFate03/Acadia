@@ -2,10 +2,11 @@ import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import Artwork from './Artwork.jsx'
 import Badge from './Badge.jsx'
-import { formatPrice } from '../data/games.js'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 // Rotating featured-game hero banner with auto-advance + manual controls.
 export default function HeroCarousel({ games, interval = 6000 }) {
+  const { t, price, gameText } = useLang()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const count = games.length
@@ -47,21 +48,21 @@ export default function HeroCarousel({ games, interval = 6000 }) {
                 <div className="mb-3 flex items-center gap-2">
                   <Badge type={game.type} />
                   <span className="text-xs font-medium uppercase tracking-wide text-slate-300">
-                    Featured
+                    {t('common.featured')}
                   </span>
                 </div>
                 <h1 className="text-2xl font-extrabold text-white sm:text-4xl lg:text-5xl">
                   {game.title}
                 </h1>
                 <p className="mt-2 line-clamp-2 max-w-lg text-sm text-slate-300 sm:text-base">
-                  {game.short}
+                  {gameText(game, 'short')}
                 </p>
                 <div className="mt-4 flex items-center gap-3">
                   <span className="btn-accent pointer-events-none">
-                    View game
+                    {t('common.viewGame')}
                   </span>
                   <span className="text-lg font-semibold text-white">
-                    {formatPrice(game.price)}
+                    {price(game.price)}
                   </span>
                 </div>
               </div>

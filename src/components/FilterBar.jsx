@@ -1,26 +1,28 @@
+import { useLang } from '../i18n/LanguageProvider.jsx'
+
 // Presentational, controlled filter/sort panel for the Browse page.
 // All state lives in the parent; this just renders controls and calls setters.
 
 const TYPE_OPTIONS = [
-  { value: 'all', label: 'All titles' },
-  { value: 'original', label: 'Acadia Originals' },
-  { value: 'marketplace', label: 'Marketplace' },
+  { value: 'all', key: 'filter.allTitles' },
+  { value: 'original', key: 'browse.originals' },
+  { value: 'marketplace', key: 'nav.marketplace' },
 ]
 
 const PRICE_OPTIONS = [
-  { value: 'all', label: 'Any price' },
-  { value: 'free', label: 'Free to Play' },
-  { value: 'under20', label: 'Under $20' },
-  { value: 'under40', label: 'Under $40' },
-  { value: '40plus', label: '$40 and up' },
+  { value: 'all', key: 'filter.anyPrice' },
+  { value: 'free', key: 'price.free' },
+  { value: 'under20', key: 'filter.under20' },
+  { value: 'under40', key: 'filter.under40' },
+  { value: '40plus', key: 'filter.40plus' },
 ]
 
 export const SORT_OPTIONS = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'title', label: 'Title: A–Z' },
+  { value: 'featured', key: 'sort.featured' },
+  { value: 'newest', key: 'sort.newest' },
+  { value: 'price-asc', key: 'sort.priceAsc' },
+  { value: 'price-desc', key: 'sort.priceDesc' },
+  { value: 'title', key: 'sort.title' },
 ]
 
 function Section({ title, children }) {
@@ -35,6 +37,8 @@ function Section({ title, children }) {
 }
 
 export default function FilterBar({ filters, setFilters, genres, tags, resultCount }) {
+  const { t, term } = useLang()
+
   const update = (patch) => setFilters((f) => ({ ...f, ...patch }))
 
   const toggleTag = (tag) =>
@@ -58,19 +62,19 @@ export default function FilterBar({ filters, setFilters, genres, tags, resultCou
   return (
     <div className="rounded-xl border border-ink-600/60 bg-ink-800/50 p-4">
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm text-slate-400">{resultCount} games</span>
+        <span className="text-sm text-slate-400">{t('browse.count', { n: resultCount })}</span>
         {hasActive && (
           <button
             type="button"
             onClick={reset}
             className="text-xs font-medium text-accent-300 hover:text-accent-200"
           >
-            Clear all
+            {t('browse.clearAll')}
           </button>
         )}
       </div>
 
-      <Section title="Type">
+      <Section title={t('filter.type')}>
         <div className="flex flex-col gap-1.5">
           {TYPE_OPTIONS.map((o) => (
             <label key={o.value} className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
@@ -81,28 +85,28 @@ export default function FilterBar({ filters, setFilters, genres, tags, resultCou
                 onChange={() => update({ type: o.value })}
                 className="accent-accent-500"
               />
-              {o.label}
+              {t(o.key)}
             </label>
           ))}
         </div>
       </Section>
 
-      <Section title="Genre">
+      <Section title={t('filter.genre')}>
         <select
           value={filters.genre}
           onChange={(e) => update({ genre: e.target.value })}
           className="w-full rounded-md border border-ink-600 bg-ink-800 px-2 py-1.5 text-sm text-slate-200 focus:border-accent-500 focus:outline-none"
         >
-          <option value="all">All genres</option>
+          <option value="all">{t('filter.allGenres')}</option>
           {genres.map((g) => (
             <option key={g} value={g}>
-              {g}
+              {term(g)}
             </option>
           ))}
         </select>
       </Section>
 
-      <Section title="Price">
+      <Section title={t('filter.price')}>
         <div className="flex flex-col gap-1.5">
           {PRICE_OPTIONS.map((o) => (
             <label key={o.value} className="flex cursor-pointer items-center gap-2 text-sm text-slate-300">
@@ -113,13 +117,13 @@ export default function FilterBar({ filters, setFilters, genres, tags, resultCou
                 onChange={() => update({ price: o.value })}
                 className="accent-accent-500"
               />
-              {o.label}
+              {t(o.key)}
             </label>
           ))}
         </div>
       </Section>
 
-      <Section title="Tags">
+      <Section title={t('filter.tags')}>
         <div className="flex flex-wrap gap-1.5">
           {tags.map((tag) => {
             const active = filters.tags.includes(tag)
@@ -134,7 +138,7 @@ export default function FilterBar({ filters, setFilters, genres, tags, resultCou
                     : 'bg-ink-700 text-slate-300 hover:bg-ink-600'
                 }`}
               >
-                {tag}
+                {term(tag)}
               </button>
             )
           })}

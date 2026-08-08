@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import Artwork from './Artwork.jsx'
 import Badge from './Badge.jsx'
-import { formatPrice } from '../data/games.js'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 // A single game tile used in rows and grids.
 // `w` lets callers set a fixed width for horizontal carousels.
 export default function GameCard({ game, className = '' }) {
+  const { t, term, price } = useLang()
   return (
     <Link
       to={`/game/${game.id}`}
@@ -26,7 +27,7 @@ export default function GameCard({ game, className = '' }) {
         </div>
         {game.price === 0 && (
           <div className="absolute right-2 top-2 rounded bg-emerald-500 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
-            Free
+            {t('common.free')}
           </div>
         )}
       </div>
@@ -43,12 +44,12 @@ export default function GameCard({ game, className = '' }) {
                 key={g}
                 className="rounded bg-ink-700 px-1.5 py-0.5 text-[10px] text-slate-300"
               >
-                {g}
+                {term(g)}
               </span>
             ))}
           </div>
           <span className="shrink-0 text-sm font-semibold text-slate-100">
-            {formatPrice(game.price)}
+            {price(game.price)}
           </span>
         </div>
       </div>

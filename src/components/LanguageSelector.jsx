@@ -1,45 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-
-// Common storefront languages. `dir` marks right-to-left scripts.
-export const LANGUAGES = [
-  { code: 'en', label: 'English', native: 'English', flag: '🇬🇧' },
-  { code: 'zh', label: 'Chinese', native: '简体中文', flag: '🇨🇳' },
-  { code: 'zh-TW', label: 'Chinese (Traditional)', native: '繁體中文', flag: '🇹🇼' },
-  { code: 'pt', label: 'Portuguese', native: 'Português', flag: '🇵🇹' },
-  { code: 'es', label: 'Spanish', native: 'Español', flag: '🇪🇸' },
-  { code: 'fr', label: 'French', native: 'Français', flag: '🇫🇷' },
-  { code: 'de', label: 'German', native: 'Deutsch', flag: '🇩🇪' },
-  { code: 'ja', label: 'Japanese', native: '日本語', flag: '🇯🇵' },
-  { code: 'ko', label: 'Korean', native: '한국어', flag: '🇰🇷' },
-  { code: 'ru', label: 'Russian', native: 'Русский', flag: '🇷🇺' },
-  { code: 'ar', label: 'Arabic', native: 'العربية', flag: '🇸🇦', dir: 'rtl' },
-]
-
-const STORAGE_KEY = 'acadia_lang'
+import { LANGUAGES } from '../i18n/translations.js'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 
 export default function LanguageSelector({ className = '' }) {
+  const { lang, setLang, t } = useLang()
   const [open, setOpen] = useState(false)
-  const [code, setCode] = useState(() => {
-    try {
-      return localStorage.getItem(STORAGE_KEY) || 'en'
-    } catch {
-      return 'en'
-    }
-  })
   const ref = useRef(null)
 
-  const current = LANGUAGES.find((l) => l.code === code) || LANGUAGES[0]
-
-  // Reflect the choice on the document (language + text direction).
-  useEffect(() => {
-    document.documentElement.lang = current.code
-    document.documentElement.dir = current.dir || 'ltr'
-    try {
-      localStorage.setItem(STORAGE_KEY, current.code)
-    } catch {
-      /* ignore */
-    }
-  }, [current])
+  const current = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0]
 
   // Close on outside click / Escape.
   useEffect(() => {
@@ -63,7 +31,7 @@ export default function LanguageSelector({ className = '' }) {
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-label="Change language"
+        aria-label={t('lang.change')}
         className="flex items-center gap-1.5 rounded-md border border-ink-600 bg-ink-800 px-2.5 py-1.5 text-sm text-slate-200 hover:bg-ink-700"
       >
         <svg viewBox="0 0 20 20" className="h-4 w-4 text-slate-400" fill="currentColor" aria-hidden="true">
@@ -86,19 +54,19 @@ export default function LanguageSelector({ className = '' }) {
               <button
                 type="button"
                 role="option"
-                aria-selected={l.code === code}
+                aria-selected={l.code === lang}
                 onClick={() => {
-                  setCode(l.code)
+                  setLang(l.code)
                   setOpen(false)
                 }}
                 className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm ${
-                  l.code === code ? 'bg-ink-700 text-white' : 'text-slate-300 hover:bg-ink-700/60'
+                  l.code === lang ? 'bg-ink-700 text-white' : 'text-slate-300 hover:bg-ink-700/60'
                 }`}
               >
                 <span className="text-base leading-none">{l.flag}</span>
                 <span className="flex-1">{l.native}</span>
                 <span className="text-xs text-slate-500">{l.label}</span>
-                {l.code === code && (
+                {l.code === lang && (
                   <svg viewBox="0 0 20 20" className="h-4 w-4 text-accent-400" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 111.4-1.4l2.8 2.8 6.8-6.8a1 1 0 011.4 0z" clipRule="evenodd" />
                   </svg>

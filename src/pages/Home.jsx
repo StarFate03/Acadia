@@ -1,5 +1,6 @@
 import HeroCarousel from '../components/HeroCarousel.jsx'
 import GameRow from '../components/GameRow.jsx'
+import { useLang } from '../i18n/LanguageProvider.jsx'
 import {
   getFeatured,
   getOriginals,
@@ -9,6 +10,7 @@ import {
 } from '../data/games.js'
 
 export default function Home() {
+  const { t } = useLang()
   const featured = getFeatured()
   const originals = getOriginals()
   const marketplace = getMarketplace()
@@ -21,7 +23,7 @@ export default function Home() {
       <div>
         <div className="mx-auto mb-4 max-w-7xl px-4 sm:px-6">
           <h1 className="text-sm font-medium uppercase tracking-widest text-accent-300">
-            Discover your next game
+            {t('home.tagline')}
           </h1>
         </div>
         <HeroCarousel games={featured} />
@@ -29,8 +31,8 @@ export default function Home() {
 
       {/* Acadia Originals */}
       <GameRow
-        title="Acadia Originals"
-        subtitle="Games made in-house by Acadia’s own studios."
+        title={t('home.originals.title')}
+        subtitle={t('home.originals.subtitle')}
         games={originals}
         moreTo="/originals"
       />
@@ -40,12 +42,12 @@ export default function Home() {
         <div className="mx-auto mb-1 max-w-7xl px-4 sm:px-6">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-300 ring-1 ring-inset ring-emerald-500/30">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            Third-party titles
+            {t('home.marketplace.tag')}
           </span>
         </div>
         <GameRow
-          title="Marketplace"
-          subtitle="Games from independent publishers, sold through Acadia."
+          title={t('home.marketplace.title')}
+          subtitle={t('home.marketplace.subtitle')}
           games={marketplace}
           moreTo="/marketplace"
         />
@@ -53,16 +55,16 @@ export default function Home() {
 
       {/* New Releases */}
       <GameRow
-        title="New Releases"
-        subtitle="Fresh arrivals across Originals and Marketplace."
+        title={t('home.new.title')}
+        subtitle={t('home.new.subtitle')}
         games={newReleases}
         moreTo="/browse?sort=newest"
       />
 
       {/* Trending */}
       <GameRow
-        title="Trending Now"
-        subtitle="What players are picking up this week."
+        title={t('home.trending.title')}
+        subtitle={t('home.trending.subtitle')}
         games={trending}
         moreTo="/browse"
       />

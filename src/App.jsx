@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
+import { useLang } from './i18n/LanguageProvider.jsx'
 import Home from './pages/Home.jsx'
 import Browse from './pages/Browse.jsx'
 import GameDetail from './pages/GameDetail.jsx'
@@ -18,6 +19,7 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const { t } = useLang()
   return (
     <div className="flex min-h-screen flex-col bg-ink-900">
       <ScrollToTop />
@@ -25,30 +27,9 @@ export default function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/browse"
-            element={<Browse initialType="all" heading="Store" blurb="Browse every Acadia Original and Marketplace title." />}
-          />
-          <Route
-            path="/originals"
-            element={
-              <Browse
-                initialType="original"
-                heading="Acadia Originals"
-                blurb="Games developed in-house by Acadia’s own studios."
-              />
-            }
-          />
-          <Route
-            path="/marketplace"
-            element={
-              <Browse
-                initialType="marketplace"
-                heading="Marketplace"
-                blurb="Third-party titles from independent publishers, sold through Acadia."
-              />
-            }
-          />
+          <Route path="/browse" element={<Browse initialType="all" />} />
+          <Route path="/originals" element={<Browse initialType="original" />} />
+          <Route path="/marketplace" element={<Browse initialType="marketplace" />} />
           <Route path="/game/:id" element={<GameDetail />} />
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/play/:id" element={<Play />} />
@@ -56,8 +37,8 @@ export default function App() {
             path="*"
             element={
               <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6">
-                <h1 className="text-3xl font-extrabold text-white">404</h1>
-                <p className="mt-2 text-slate-400">This page doesn’t exist.</p>
+                <h1 className="text-3xl font-extrabold text-white">{t('notfound.title')}</h1>
+                <p className="mt-2 text-slate-400">{t('notfound.body')}</p>
               </div>
             }
           />
