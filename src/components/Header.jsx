@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import LanguageSelector from './LanguageSelector.jsx'
 
 const navLinks = [
   { to: '/browse', label: 'Store' },
@@ -45,31 +46,34 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Search */}
-        <form onSubmit={submitSearch} className="ml-auto hidden sm:block">
-          <div className="relative">
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search games…"
-              aria-label="Search games"
-              className="w-44 rounded-md border border-ink-600 bg-ink-800 py-1.5 pl-8 pr-3 text-sm text-slate-200 placeholder:text-slate-500 focus:border-accent-500 focus:outline-none lg:w-64"
-            />
-            <svg
-              className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.45 4.39l3.08 3.08a1 1 0 01-1.42 1.42l-3.08-3.08A7 7 0 012 9z"
-                clipRule="evenodd"
+        {/* Search + language */}
+        <div className="ml-auto hidden items-center gap-2 sm:flex">
+          <form onSubmit={submitSearch}>
+            <div className="relative">
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search games…"
+                aria-label="Search games"
+                className="w-40 rounded-md border border-ink-600 bg-ink-800 py-1.5 pl-8 pr-3 text-sm text-slate-200 placeholder:text-slate-500 focus:border-accent-500 focus:outline-none lg:w-56"
               />
-            </svg>
-          </div>
-        </form>
+              <svg
+                className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.45 4.39l3.08 3.08a1 1 0 01-1.42 1.42l-3.08-3.08A7 7 0 012 9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+          </form>
+          <LanguageSelector />
+        </div>
 
         {/* Mobile menu toggle */}
         <button
@@ -118,6 +122,10 @@ export default function Header() {
               </NavLink>
             ))}
           </nav>
+          <div className="mt-3 border-t border-ink-600/70 pt-3">
+            <span className="mb-1.5 block text-xs font-medium text-slate-500">Language</span>
+            <LanguageSelector />
+          </div>
         </div>
       )}
     </header>

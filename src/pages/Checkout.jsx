@@ -2,7 +2,15 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Artwork from '../components/Artwork.jsx'
 import Badge from '../components/Badge.jsx'
+import QRCode from '../components/QRCode.jsx'
 import { getGameById, formatPrice } from '../data/games.js'
+
+const PAYMENT_METHODS = [
+  { id: 'card', label: 'Credit Card', badge: '💳', badgeClass: 'bg-ink-700' },
+  { id: 'unionpay', label: 'UnionPay', badge: '银联', badgeClass: 'bg-red-600 text-white text-[10px]' },
+  { id: 'alipay', label: 'Alipay', badge: '支', badgeClass: 'bg-sky-500 text-white' },
+  { id: 'wechat', label: 'WeChat Pay', badge: '微', badgeClass: 'bg-green-500 text-white' },
+]
 
 function Field({ label, children, className = '' }) {
   return (
@@ -20,6 +28,7 @@ export default function Checkout() {
   const { id } = useParams()
   const game = getGameById(id)
   const [done, setDone] = useState(false)
+  const [method, setMethod] = useState('card')
   const [orderNo] = useState(
     () => 'AC-' + Math.random().toString(36).slice(2, 8).toUpperCase(),
   )
@@ -125,68 +134,98 @@ export default function Checkout() {
           {!isFree && (
             <section className="rounded-xl border border-ink-600/60 bg-ink-800/50 p-5">
               <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
-                Payment
+                Payment method
               </h2>
-              <div className="space-y-4">
-                <Field label="Cardholder name">
-                  <input
-                    type="text"
-                    required
-                    placeholder="Full name on card"
-                    className={inputClass}
-                    autoComplete="cc-name"
-                  />
-                </Field>
-                <Field label="Card number">
-                  <input
-                    type="text"
-                    required
-                    inputMode="numeric"
-                    placeholder="4242 4242 4242 4242"
-                    maxLength={19}
-                    className={`${inputClass} font-mono`}
-                    autoComplete="cc-number"
-                  />
-                </Field>
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Expiry (MM/YY)">
-                    <input
-                      type="text"
-                      required
-                      placeholder="12/28"
-                      maxLength={5}
-                      className={`${inputClass} font-mono`}
-                      autoComplete="cc-exp"
-                    />
+
+              {/* Method selector */}
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {PAYMENT_METHODS.map((m) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setMethod(m.id)}
+                    aria-pressed={method === m.id}
+                    className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors ${
+                      method === m.id
+                        ? 'border-accent-500 bg-accent-500/10 text-white'
+                        : 'border-ink-600 bg-ink-900/40 text-slate-300 hover:border-ink-500'
+                    }`}
+                  >
+                    <span
+                      className={`grid h-6 w-6 shrink-0 place-items-center rounded font-bold ${m.badgeClass}`}
+                    >
+                      {m.badge}
+                    </span>
+                    <span className="truncate">{m.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Card form (Credit Card + UnionPay) */}
+              {(method === 'card' || method === 'unionpay') && (
+                <div className="mt-5 space-y-4">
+                  <Field label="Cardholder name">
+                    <input type="text" required placeholder="Full name on card" className={inputClass} autoComplete="cc-name" />
                   </Field>
-                  <Field label="CVC">
+                  <Field label="Card number">
                     <input
                       type="text"
                       required
                       inputMode="numeric"
-                      placeholder="123"
-                      maxLength={4}
+                      placeholder={method === 'unionpay' ? '6212 3456 7890 1234' : '4242 4242 4242 4242'}
+                      maxLength={19}
                       className={`${inputClass} font-mono`}
-                      autoComplete="cc-csc"
+                      autoComplete="cc-number"
                     />
                   </Field>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field label="Expiry (MM/YY)">
+                      <input type="text" required placeholder="12/28" maxLength={5} className={`${inputClass} font-mono`} autoComplete="cc-exp" />
+                    </Field>
+                    <Field label="CVC / CVN">
+                      <input type="text" required inputMode="numeric" placeholder="123" maxLength={4} className={`${inputClass} font-mono`} autoComplete="cc-csc" />
+                    </Field>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field label="Country / Region">
+                      <input type="text" required placeholder="Country" className={inputClass} autoComplete="country-name" />
+                    </Field>
+                    <Field label="Postal code">
+                      <input type="text" required placeholder="ZIP / Postcode" className={inputClass} autoComplete="postal-code" />
+                    </Field>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Country">
-                    <input type="text" required placeholder="Country" className={inputClass} autoComplete="country-name" />
-                  </Field>
-                  <Field label="Postal code">
-                    <input type="text" required placeholder="ZIP / Postcode" className={inputClass} autoComplete="postal-code" />
-                  </Field>
+              )}
+
+              {/* QR panel (Alipay + WeChat Pay) */}
+              {(method === 'alipay' || method === 'wechat') && (
+                <div className="mt-5 flex flex-col items-center rounded-lg border border-ink-600/60 bg-ink-900/50 p-6 text-center">
+                  <p className="text-sm font-medium text-slate-200">
+                    Scan with {method === 'alipay' ? 'Alipay' : 'WeChat Pay'} to pay{' '}
+                    <span className="font-bold text-white">{formatPrice(total)}</span>
+                  </p>
+                  <div className="my-4 rounded-xl bg-white p-3 shadow-lg">
+                    <QRCode value={`${method}-${game.id}-${orderNo}`} size={180} />
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <span
+                      className={`grid h-5 w-5 place-items-center rounded font-bold ${
+                        method === 'alipay' ? 'bg-sky-500' : 'bg-green-500'
+                      } text-white`}
+                    >
+                      {method === 'alipay' ? '支' : '微'}
+                    </span>
+                    Open the {method === 'alipay' ? 'Alipay' : 'WeChat'} app → Scan, then confirm below.
+                  </div>
                 </div>
-              </div>
+              )}
 
               <p className="mt-4 flex items-start gap-2 rounded-md bg-ink-900/70 px-3 py-2 text-xs text-slate-400">
                 <svg viewBox="0 0 20 20" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500" fill="currentColor">
                   <path fillRule="evenodd" d="M10 2a5 5 0 00-5 5v2H4a1 1 0 00-1 1v6a1 1 0 001 1h12a1 1 0 001-1v-6a1 1 0 00-1-1h-1V7a5 5 0 00-5-5zm3 7V7a3 3 0 10-6 0v2h6z" clipRule="evenodd" />
                 </svg>
-                Demo store — payment is simulated for showcase purposes and no card is
-                charged. Please don’t enter real card details.
+                Demo store — payment is simulated for showcase purposes. The QR code is a
+                placeholder and nothing is charged. Please don’t enter real payment details.
               </p>
             </section>
           )}
@@ -226,7 +265,11 @@ export default function Checkout() {
             </dl>
 
             <button type="submit" className="btn-accent mt-5 w-full py-3 text-base">
-              {isFree ? 'Get game' : `Pay ${formatPrice(total)}`}
+              {isFree
+                ? 'Get game'
+                : method === 'alipay' || method === 'wechat'
+                  ? "I've completed payment"
+                  : `Pay ${formatPrice(total)}`}
             </button>
             <Link
               to={`/game/${game.id}`}
