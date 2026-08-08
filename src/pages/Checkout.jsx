@@ -201,19 +201,27 @@ export default function Checkout() {
                   <p className="text-sm font-medium text-slate-200">
                     {t('checkout.scan', { method: t(`pay.${method}`), price: price(total) })}
                   </p>
-                  <div className="my-4 rounded-xl bg-white p-3 shadow-lg">
-                    <QRCode value={`${method}-${game.id}-${orderNo}`} size={180} />
+                  <div className="relative my-4 rounded-xl bg-white p-3 shadow-lg">
+                    <QRCode
+                      value={`${method}-${game.id}-${orderNo}`}
+                      size={180}
+                      className="opacity-25 blur-[2px] grayscale"
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4">
+                      <span className="grid h-12 w-12 place-items-center rounded-full bg-red-500 text-3xl font-black leading-none text-white shadow-lg">
+                        !
+                      </span>
+                      <span className="rounded bg-red-600 px-2 py-0.5 text-[11px] font-semibold text-white">
+                        {t('checkout.qrError')}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-400">
-                    <span
-                      className={`grid h-5 w-5 place-items-center rounded font-bold ${
-                        method === 'alipay' ? 'bg-sky-500' : 'bg-green-500'
-                      } text-white`}
-                    >
-                      {method === 'alipay' ? '支' : '微'}
-                    </span>
-                    {t('checkout.openApp', { app: t(`pay.${method}`) })}
-                  </div>
+                  <p className="flex items-start gap-2 text-xs text-red-300">
+                    <svg viewBox="0 0 20 20" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="currentColor" aria-hidden="true">
+                      <path fillRule="evenodd" d="M8.26 3.1c.77-1.33 2.71-1.33 3.48 0l6.28 10.86c.77 1.33-.19 3-1.74 3H3.72c-1.55 0-2.51-1.67-1.74-3L8.26 3.1zM10 7a1 1 0 00-1 1v3a1 1 0 102 0V8a1 1 0 00-1-1zm0 7a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
+                    </svg>
+                    {t('checkout.qrErrorHint')}
+                  </p>
                 </div>
               )}
 
